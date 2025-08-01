@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: "pages"
@@ -34,7 +35,10 @@ jobs:
         run: npm run build
         
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
