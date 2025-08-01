@@ -32,7 +32,7 @@ const numeroWhatsApp = "56948930101";
 		<meta property="og:type" content="website" />
 		
 		<!-- Preload script crítico -->
-		<link rel="modulepreload" href="/js/app.js" />
+		<!-- <link rel="modulepreload" href="/js/app.js" /> -->
 
 		<!-- CSS optimizado inline crítico -->
 		<style>
@@ -177,6 +177,117 @@ const numeroWhatsApp = "56948930101";
 		</footer>
 
 		<!-- Script optimizado cargado de forma diferida -->
-		<script type="module" src="/js/app.js"></script>
+		<script type="module">
+			// Número de WhatsApp de contacto
+			const numeroWhatsApp = "56948930101";
+
+			// Función para formatear precio (similar a la del servidor)
+			function formatearPrecio(precio) {
+				return new Intl.NumberFormat('es-CO', {
+					style: 'currency',
+					currency: 'COP',
+					minimumFractionDigits: 0
+				}).format(precio);
+			}
+
+			// Función para generar mensaje de WhatsApp
+			function generarMensajeWhatsApp(producto) {
+				const mensaje = `¡Hola! Estoy interesado(a) en el siguiente producto:
+
+🛍️ ${producto.nombre}
+💰 Precio: ${formatearPrecio(producto.precio)}
+📦 Disponible: ${producto.cantidad} unidades
+
+${producto.descripcion}
+
+¿Podrías darme más información sobre disponibilidad y formas de pago?
+
+¡Gracias!`;
+
+				return encodeURIComponent(mensaje);
+			}
+
+			// Función para obtener datos del producto desde el DOM
+			function obtenerDatosProducto(button) {
+				const card = button.closest('.producto-card');
+				if (!card) return null;
+				
+				const nombre = card.querySelector('.producto-nombre')?.textContent || '';
+				const precioText = card.querySelector('.precio')?.textContent || '';
+				const cantidadText = card.querySelector('.cantidad')?.textContent || '';
+				const descripcion = card.querySelector('.producto-descripcion')?.textContent || '';
+				
+				// Extraer el precio numérico
+				const precioMatch = precioText.match(/[\d,]+/);
+				const precio = precioMatch ? parseInt(precioMatch[0].replace(/,/g, '')) : 0;
+				
+				// Extraer la cantidad numérica
+				const cantidadMatch = cantidadText.match(/\d+/);
+				const cantidad = cantidadMatch ? parseInt(cantidadMatch[0]) : 0;
+				
+				return {
+					nombre,
+					precio,
+					cantidad,
+					descripcion
+				};
+			}
+
+			// Función para manejar clicks en botones de WhatsApp
+			function manejarClickWhatsApp(event) {
+				const button = event.target;
+				const producto = obtenerDatosProducto(button);
+				
+				if (producto && producto.nombre) {
+					// Generar mensaje de WhatsApp
+					const mensaje = generarMensajeWhatsApp(producto);
+					
+					// Abrir WhatsApp con el mensaje
+					const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+					window.open(urlWhatsApp, '_blank');
+				} else {
+					console.error('No se pudieron obtener los datos del producto');
+				}
+			}
+
+			// Inicializar la aplicación cuando el DOM esté listo
+			document.addEventListener('DOMContentLoaded', function() {
+				console.log('Aplicación iniciada');
+				
+				// Agregar event listeners a todos los botones de WhatsApp
+				const botonesWhatsApp = document.querySelectorAll('.btn-whatsapp');
+				
+				botonesWhatsApp.forEach(button => {
+					button.addEventListener('click', manejarClickWhatsApp);
+				});
+				
+				console.log('Event listeners agregados a', botonesWhatsApp.length, 'botones');
+				
+				// Mostrar productos cargados en la página
+				const productCards = document.querySelectorAll('.producto-card');
+				console.log('Productos mostrados en la página:', productCards.length);
+			});
+		</script>
+		
+		<!-- Registro del Service Worker -->
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					// Construir la URL del service worker basada en la ubicación actual
+					const baseURL = window.location.pathname.includes('/remate-insumo-manicure/') 
+						? '/remate-insumo-manicure/' 
+						: '/';
+					const swURL = baseURL + 'sw.js';
+					
+					navigator.serviceWorker.register(swURL)
+						.then(function(registration) {
+							console.log('Service Worker registrado exitosamente:', registration.scope);
+						})
+						.catch(function(error) {
+							console.log('Error al registrar Service Worker:', error);
+						});
+				});
+			}
+		</script>
 	</body>
 </html>

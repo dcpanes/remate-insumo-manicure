@@ -2,43 +2,43 @@
 export const productos = [
   {
     id: 1,
-    nombre: "Esmalte Base",
-    precio: 15000,
-    cantidad: 25,
-    imagen: "https://via.placeholder.com/300x200/f093fb/white?text=Esmalte+Base",
-    descripcion: "Base protectora para uñas, ideal para preparar las uñas antes del color."
+    nombre: "MIA SECRET POLVO ACRILICO 15g VARIEDADES",
+    precio: 3900,
+    cantidad: 30,
+    imagen: "https://miasecretstore.com/cdn/shop/products/a1d8f759.jpg?v=1657913021&width=1214",
+    descripcion: "colores: natural Pink,Blanco, Cover Almond, Cover nude Blush, Cover beige, cover Golden,."
   },
   {
     id: 2,
-    nombre: "Esmalte Color Rojo",
-    precio: 12000,
-    cantidad: 18,
-    imagen: "https://via.placeholder.com/300x200/dc2626/white?text=Esmalte+Rojo",
-    descripcion: "Esmalte rojo vibrante de larga duración, perfecto para cualquier ocasión."
+    nombre: "MIA SECRET POLVO ACRILICO 30g VARIEDADES",
+    precio: 5900,
+    cantidad: 25,
+    imagen: "https://miasecretstore.com/cdn/shop/products/PL420-FP.jpg?v=1657929641&width=900",
+    descripcion: "Colores: Frosted Pink,Cover Beige,Cover golden,Cover nude blush, Blanco y Natural pink"
   },
   {
     id: 3,
-    nombre: "Top Coat Brillante",
-    precio: 18000,
-    cantidad: 22,
-    imagen: "https://via.placeholder.com/300x200/10b981/white?text=Top+Coat",
-    descripcion: "Sellador transparente que da brillo y protege el esmalte."
+    nombre: "MIA SECRET POLVO ACRILICO 59h VARIEDADES",
+    precio: 9500,
+    cantidad: 26,
+    imagen: "https://miasecretstore.com/cdn/shop/products/PL430-CM.jpg?v=1657913021&width=900",
+    descripcion: "Colores: Frosted pink,Cover nude blush, cover beige, blanco, cover peach, cover golden."
   },
   {
     id: 4,
-    nombre: "Lima de Uñas Professional",
-    precio: 8000,
-    cantidad: 35,
-    imagen: "https://via.placeholder.com/300x200/6366f1/white?text=Lima+de+Uñas",
-    descripcion: "Lima profesional de doble cara, perfecta para dar forma a las uñas."
+    nombre: "Coleccion polvos x 6 MOODS LEGACY NAILS ",
+    precio: 9000,
+    cantidad: 1,
+    imagen: "https://legacynailsinc.com/wp-content/uploads/2018/11/Color-chart-Moods-1.jpg",
+    descripcion: "COLOR MOODS : 6 POLVOS DE 7g cada uno"
   },
   {
     id: 5,
-    nombre: "Acetona Sin Olor",
-    precio: 6000,
-    cantidad: 40,
-    imagen: "https://via.placeholder.com/300x200/3b82f6/white?text=Acetona",
-    descripcion: "Acetona sin olor para remover esmalte sin dañar las uñas."
+    nombre: "Coleccion polvos x 6 PASTELES LEGACY NAILS",
+    precio: 9000,
+    cantidad: 1,
+    imagen: "https://legacynailsinc.com/wp-content/uploads/2019/07/Color-chart-Pasteles.jpg",
+    descripcion: "Coleccion Pasteles : 6 polvos de 7g cada uno"
   },
   {
     id: 6,
@@ -91,7 +91,7 @@ export const formatearPrecio = (precio) => {
 export const generarMensajeWhatsApp = (producto) => {
   const mensaje = `¡Hola! Estoy interesado(a) en el siguiente producto:
 
-🛍️ *${producto.nombre}*
+🛍️ ${producto.nombre}
 💰 Precio: ${formatearPrecio(producto.precio)}
 📦 Disponible: ${producto.cantidad} unidades
 

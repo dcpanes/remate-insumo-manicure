@@ -34,6 +34,7 @@ const { producto, formatearPrecio } = Astro.props;
     <div class="cantidad-container">
       <span class="cantidad">{producto.cantidad} disponibles</span>
     </div>
+    <p class="producto-descripcion">{producto.descripcion}</p>
     <button 
       class="btn-whatsapp"
       data-producto-id={producto.id}
@@ -109,6 +110,17 @@ const { producto, formatearPrecio } = Astro.props;
     background: #edf2f7;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
+  }
+
+  .producto-descripcion {
+    font-size: 0.9rem;
+    color: #4a5568;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .btn-whatsapp {
