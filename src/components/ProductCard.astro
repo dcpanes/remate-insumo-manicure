@@ -1,0 +1,139 @@
+---
+export interface Props {
+  producto: {
+    id: number;
+    nombre: string;
+    precio: number;
+    cantidad: number;
+    imagen: string;
+    descripcion: string;
+  };
+  formatearPrecio: (precio: number) => string;
+}
+
+const { producto, formatearPrecio } = Astro.props;
+---
+
+<div class="producto-card">
+  <div class="producto-imagen-container">
+    <img 
+      src={producto.imagen} 
+      alt={producto.nombre}
+      class="producto-imagen"
+      loading="lazy"
+      decoding="async"
+      width="300"
+      height="200"
+    />
+  </div>
+  <div class="card-body">
+    <h3 class="producto-nombre">{producto.nombre}</h3>
+    <div class="precio-container">
+      <span class="precio">{formatearPrecio(producto.precio)}</span>
+    </div>
+    <div class="cantidad-container">
+      <span class="cantidad">{producto.cantidad} disponibles</span>
+    </div>
+    <button 
+      class="btn-whatsapp"
+      data-producto-id={producto.id}
+      type="button"
+    >
+      📱 Consultar por WhatsApp
+    </button>
+  </div>
+</div>
+
+<style>
+  .producto-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    contain: layout style paint;
+  }
+
+  .producto-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+  }
+
+  .producto-imagen-container {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    background: #f7fafc;
+  }
+
+  .producto-imagen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .producto-card:hover .producto-imagen {
+    transform: scale(1.05);
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .producto-nombre {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .precio-container {
+    margin-bottom: 0.75rem;
+  }
+
+  .precio {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #38a169;
+  }
+
+  .cantidad-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .cantidad {
+    font-size: 0.9rem;
+    color: #718096;
+    background: #edf2f7;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+  }
+
+  .btn-whatsapp {
+    width: 100%;
+    background: #25d366;
+    color: white;
+    border: none;
+    padding: 0.875rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .btn-whatsapp:hover {
+    background: #128c7e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  }
+
+  .btn-whatsapp:active {
+    transform: translateY(0);
+  }
+</style>

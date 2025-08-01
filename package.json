@@ -1,0 +1,20 @@
+{
+  "name": "remate-insumo-manicure",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "build:analyze": "astro build --verbose",
+    "lighthouse": "npx lighthouse http://localhost:4321 --output html --output-path ./lighthouse-report.html",
+    "deploy": "npm run build && git checkout --orphan gh-pages && git --work-tree dist add --all && git --work-tree dist commit -m 'deploy' && git push origin HEAD:gh-pages --force && git checkout -"
+  },
+  "dependencies": {
+    "astro": "^5.12.8"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.0.0"
+  }
+}

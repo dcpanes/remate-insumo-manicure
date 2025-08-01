@@ -1,0 +1,182 @@
+---
+// Importar productos desde archivo separado
+import { productos, formatearPrecio } from '../data/productos.js';
+import ProductCard from '../components/ProductCard.astro';
+
+// Número de WhatsApp 
+const numeroWhatsApp = "56948930101";
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- SEO y Performance -->
+		<title>Remate Insumos de Manicure - Ofertas Especiales</title>
+		<meta name="description" content="Aprovecha nuestros precios especiales en insumos de manicure de alta calidad. Esmaltes, herramientas y más." />
+		<meta name="keywords" content="manicure, esmaltes, uñas, ofertas, insumos, belleza" />
+		
+		<!-- Preload recursos críticos -->
+		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+		
+		<!-- DNS prefetch para WhatsApp -->
+		<link rel="dns-prefetch" href="//wa.me">
+		
+		<!-- Open Graph -->
+		<meta property="og:title" content="Remate Insumos de Manicure" />
+		<meta property="og:description" content="Aprovecha nuestros precios especiales en insumos de manicure de alta calidad" />
+		<meta property="og:type" content="website" />
+		
+		<!-- Preload script crítico -->
+		<link rel="modulepreload" href="/js/app.js" />
+
+		<!-- CSS optimizado inline crítico -->
+		<style>
+			:root {
+				--color-1: #F3B5F5;
+				--color-2: #F5F3B5;
+				--color-3: #B5F5F3;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+				line-height: 1.6;
+				color: #333;
+				background-color: #f8fafc;
+				font-display: swap;
+			}
+
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 20px;
+			}
+
+			/* Header */
+			.header {
+				background: var(--color-1);
+				color: #2d3748;
+				padding: 2rem 0;
+				text-align: center;
+			}
+
+			.logo {
+				font-size: clamp(1.8rem, 4vw, 2.5rem);
+				font-weight: 700;
+				margin-bottom: 0.5rem;
+			}
+
+			/* Main */
+			.main {
+				padding: 3rem 0;
+			}
+
+			.hero {
+				text-align: center;
+				margin-bottom: 3rem;
+			}
+
+			.hero h2 {
+				font-size: clamp(1.8rem, 4vw, 2.2rem);
+				color: #2d3748;
+				margin-bottom: 1rem;
+			}
+
+			.hero p {
+				font-size: 1.1rem;
+				color: #718096;
+				max-width: 600px;
+				margin: 0 auto;
+			}
+
+			/* Products Grid con CSS Grid optimizado */
+			.productos-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 1.5rem;
+				margin-bottom: 4rem;
+				contain: layout;
+			}
+
+			/* Footer */
+			.footer {
+				background: #2d3748;
+				color: white;
+				text-align: center;
+				padding: 2rem 0;
+			}
+
+			/* Media queries optimizadas */
+			@media (max-width: 768px) {
+				.container {
+					padding: 0 15px;
+				}
+				
+				.productos-grid {
+					grid-template-columns: 1fr;
+					gap: 1rem;
+				}
+				
+				.main {
+					padding: 2rem 0;
+				}
+			}
+
+			/* Optimizaciones de performance */
+			.productos-grid {
+				will-change: transform;
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				*,
+				*::before,
+				*::after {
+					animation-duration: 0.01ms !important;
+					animation-iteration-count: 1 !important;
+					transition-duration: 0.01ms !important;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header class="header">
+			<div class="container">
+				<h1 class="logo">Remate Insumos Manicure</h1>
+			</div>
+		</header>
+
+		<main class="main">
+			<div class="container">
+				<section class="hero">
+					<h2>Productos en Oferta</h2>
+					<p>Aprovecha nuestros precios especiales en insumos de manicure de alta calidad</p>
+				</section>
+
+				<section class="productos-grid">
+					{productos.map((producto) => (
+						<ProductCard producto={producto} formatearPrecio={formatearPrecio} />
+					))}
+				</section>
+			</div>
+		</main>
+
+		<footer class="footer">
+			<div class="container">
+				<p>&copy; 2025 Remate Insumos Manicure. Todos los derechos reservados.</p>
+			</div>
+		</footer>
+
+		<!-- Script optimizado cargado de forma diferida -->
+		<script type="module" src="/js/app.js"></script>
+	</body>
+</html>
