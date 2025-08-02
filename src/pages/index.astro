@@ -1,6 +1,6 @@
 ---
 // Importar productos desde archivo separado
-import { productos, formatearPrecio } from '../data/productos.js';
+import { productos } from '../data/productos.js';
 import ProductCard from '../components/ProductCard.astro';
 
 // Número de WhatsApp 
@@ -20,8 +20,8 @@ const numeroWhatsApp = "56948930101";
 		<meta name="keywords" content="manicure, esmaltes, uñas, ofertas, insumos, belleza" />
 		
 		<!-- Preload recursos críticos -->
-		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:wght@300;400;700;900&display=swap"></noscript>
 		
 		<!-- DNS prefetch para WhatsApp -->
 		<link rel="dns-prefetch" href="//wa.me">
@@ -66,14 +66,16 @@ const numeroWhatsApp = "56948930101";
 			.header {
 				background: var(--color-1);
 				color: #2d3748;
-				padding: 2rem 0;
+				/* padding: 1rem 0; */
 				text-align: center;
 			}
 
 			.logo {
+				font-family: 'Lato', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 				font-size: clamp(1.8rem, 4vw, 2.5rem);
 				font-weight: 700;
 				margin-bottom: 0.5rem;
+				color: white;
 			}
 
 			/* Main */
@@ -97,12 +99,81 @@ const numeroWhatsApp = "56948930101";
 				color: #718096;
 				max-width: 600px;
 				margin: 0 auto;
+				margin-bottom: 2rem;
+			}
+
+			/* Barra de búsqueda */
+			.search-container {
+				max-width: 800px;
+				margin: 0 auto 2rem;
+				position: relative;
+			}
+
+			.search-input {
+				width: 100%;
+				padding: 12px 20px 12px 45px;
+				border: 2px solid #e2e8f0;
+				border-radius: 25px;
+				font-size: 16px;
+				outline: none;
+				transition: border-color 0.3s ease, box-shadow 0.3s ease;
+				background-color: white;
+			}
+
+			.search-input:focus {
+				border-color: var(--color-1);
+				box-shadow: 0 0 0 3px rgba(243, 181, 245, 0.1);
+			}
+
+			.search-icon {
+				position: absolute;
+				left: 15px;
+				top: 50%;
+				transform: translateY(-50%);
+				color: #718096;
+				width: 20px;
+				height: 20px;
+			}
+
+			.clear-search {
+				position: absolute;
+				right: 15px;
+				top: 50%;
+				transform: translateY(-50%);
+				background: none;
+				border: none;
+				color: #718096;
+				cursor: pointer;
+				display: none;
+				padding: 5px;
+				border-radius: 50%;
+				transition: background-color 0.3s ease;
+			}
+
+			.clear-search:hover {
+				background-color: #f1f5f9;
+			}
+
+			.clear-search.visible {
+				display: block;
+			}
+
+			.no-results {
+				text-align: center;
+				color: #718096;
+				font-size: 1.1rem;
+				margin: 3rem 0;
+				display: none;
+			}
+
+			.no-results.visible {
+				display: block;
 			}
 
 			/* Products Grid con CSS Grid optimizado */
 			.productos-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 				gap: 1.5rem;
 				margin-bottom: 4rem;
 				contain: layout;
@@ -123,12 +194,18 @@ const numeroWhatsApp = "56948930101";
 				}
 				
 				.productos-grid {
-					grid-template-columns: 1fr;
-					gap: 1rem;
+					grid-template-columns: repeat(2, 1fr);
+					gap: 0.75rem;
 				}
 				
 				.main {
 					padding: 2rem 0;
+				}
+			}
+
+			@media (max-width: 480px) {
+				.productos-grid {
+					grid-template-columns: 1fr;
 				}
 			}
 
@@ -158,15 +235,34 @@ const numeroWhatsApp = "56948930101";
 		<main class="main">
 			<div class="container">
 				<section class="hero">
-					<h2>Productos en Oferta</h2>
-					<p>Aprovecha nuestros precios especiales en insumos de manicure de alta calidad</p>
+					
+					<!-- Barra de búsqueda -->
+					<div class="search-container">
+						<input 
+							type="text" 
+							class="search-input" 
+							placeholder="Buscar productos..."
+							id="search-input"
+							autocomplete="off"
+						/>
+						<button class="clear-search" id="clear-search" title="Limpiar búsqueda">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+							</svg>
+						</button>
+					</div>
 				</section>
 
 				<section class="productos-grid">
 					{productos.map((producto) => (
-						<ProductCard producto={producto} formatearPrecio={formatearPrecio} />
+						<ProductCard producto={producto} />
 					))}
 				</section>
+
+				<div class="no-results" id="no-results">
+					<p>No se encontraron productos que coincidan con tu búsqueda.</p>
+					<p>Intenta con otros términos o revisa todos nuestros productos.</p>
+				</div>
 			</div>
 		</main>
 
@@ -181,22 +277,13 @@ const numeroWhatsApp = "56948930101";
 			// Número de WhatsApp de contacto
 			const numeroWhatsApp = "56948930101";
 
-			// Función para formatear precio (similar a la del servidor)
-			function formatearPrecio(precio) {
-				return new Intl.NumberFormat('es-CO', {
-					style: 'currency',
-					currency: 'COP',
-					minimumFractionDigits: 0
-				}).format(precio);
-			}
 
 			// Función para generar mensaje de WhatsApp
 			function generarMensajeWhatsApp(producto) {
 				const mensaje = `¡Hola! Estoy interesado(a) en el siguiente producto:
 
 🛍️ ${producto.nombre}
-💰 Precio: ${formatearPrecio(producto.precio)}
-📦 Disponible: ${producto.cantidad} unidades
+💰 Precio: ${producto.precio}
 
 ${producto.descripcion}
 
@@ -266,7 +353,79 @@ ${producto.descripcion}
 				// Mostrar productos cargados en la página
 				const productCards = document.querySelectorAll('.producto-card');
 				console.log('Productos mostrados en la página:', productCards.length);
+
+				// Inicializar funcionalidad de búsqueda
+				initializeSearch();
 			});
+
+			// Función para inicializar la búsqueda
+			function initializeSearch() {
+				const searchInput = document.getElementById('search-input');
+				const clearButton = document.getElementById('clear-search');
+				const productCards = document.querySelectorAll('.producto-card');
+				const noResults = document.getElementById('no-results');
+
+				if (!searchInput || !clearButton || !noResults) {
+					console.error('Elementos de búsqueda no encontrados');
+					return;
+				}
+
+				// Función para filtrar productos
+				function filterProducts(searchTerm) {
+					const term = searchTerm.toLowerCase().trim();
+					let visibleCount = 0;
+
+					productCards.forEach(card => {
+						const nombre = card.querySelector('.producto-nombre')?.textContent?.toLowerCase() || '';
+						const descripcion = card.querySelector('.producto-descripcion')?.textContent?.toLowerCase() || '';
+						
+						const matches = nombre.includes(term) || descripcion.includes(term);
+						
+						if (matches || term === '') {
+							card.style.display = 'block';
+							visibleCount++;
+						} else {
+							card.style.display = 'none';
+						}
+					});
+
+					// Mostrar/ocultar mensaje de "no resultados"
+					if (visibleCount === 0 && term !== '') {
+						noResults.classList.add('visible');
+					} else {
+						noResults.classList.remove('visible');
+					}
+
+					// Mostrar/ocultar botón de limpiar
+					if (term !== '') {
+						clearButton.classList.add('visible');
+					} else {
+						clearButton.classList.remove('visible');
+					}
+				}
+
+				// Event listener para el input de búsqueda
+				searchInput.addEventListener('input', function(e) {
+					filterProducts(e.target.value);
+				});
+
+				// Event listener para el botón de limpiar
+				clearButton.addEventListener('click', function() {
+					searchInput.value = '';
+					filterProducts('');
+					searchInput.focus();
+				});
+
+				// Permitir limpiar con Escape
+				searchInput.addEventListener('keydown', function(e) {
+					if (e.key === 'Escape') {
+						searchInput.value = '';
+						filterProducts('');
+					}
+				});
+
+				console.log('Búsqueda inicializada con', productCards.length, 'productos');
+			}
 		</script>
 		
 		<!-- Registro del Service Worker -->
